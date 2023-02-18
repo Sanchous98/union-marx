@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  drupal:
+    container_name: website
+    image: drupal:latest
+    ports:
+      - "80:80"
+    volumes:
+      - drupal_modules:/var/www/html/modules:delegated
+      - drupal_profiles:/var/www/html/profiles:delegated
+      - drupal_themes:/var/www/html/themes:delegated
+      - drupal_sites:/var/www/html/sites:delegated
+      - ./composer.json:/opt/drupal/composer.json
+      - ./composer.lock:/opt/drupal/composer.lock
+    restart: always
+
+  mariadb:
+    container_name: database
+    image: mariadb:latest
+    environment:
+      MARIADB_DATABASE: union_marx
+      MARIADB_USER: user
+      MARIADB_PASSWORD: secret
+      MARIADB_ROOT_PASSWORD: secret
+    volumes:
+      - db_data:/var/lib/mysql:cached
+    restart: always
+
+volumes:
+  drupal_modules:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./web/modules
+  drupal_profiles:
+  drupal_themes:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./web/themes
+  drupal_sites:
+  db_data:
