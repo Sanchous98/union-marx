@@ -3,3 +3,4 @@
 /web/*
 !/web/themes
 !/web/modules
+/web/modules/contrib
