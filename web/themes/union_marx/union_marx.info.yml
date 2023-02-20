@@ -1,0 +1,5 @@
+name: Union Marx
+type: theme
+core_version_requirement: ^10
+base theme: olivero
+version: 0.0.1a
